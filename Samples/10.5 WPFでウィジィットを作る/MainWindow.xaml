@@ -1,0 +1,11 @@
+﻿<Window x:Class="Sample10._5.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mmf="http://mmflex.codeplex.com/"
+        xmlns:wpf="clr-namespace:MMF.Controls.WPF;assembly=MikuMikuFlex"
+        Title="MainWindow" Height="350" Width="525" WindowState="Maximized" AllowsTransparency="True" WindowStyle="None" Background="#01000000">
+    <!--Windowの属性を以上のようにすれば、透明のウィンドウができる。なお、Backgroundは#01000000となってる理由はcsのほう参照-->
+    <Grid>
+        <wpf:WPFRenderControl x:Name="RenderControl"/>
+    </Grid>
+</Window>

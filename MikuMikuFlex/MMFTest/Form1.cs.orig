@@ -1,0 +1,156 @@
+﻿#define VSG_DEBUG
+#region
+
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+using MMDD.CG.Model.Sprite;
+using MMF;
+using MMF.CG.Camera.CameraMotion;
+using MMF.CG.DeviceManager;
+using MMF.CG.Kinect;
+using MMF.CG.Model.Grid;
+using MMF.CG.Model.Shape;
+using MMF.CG.Model.Sprite.D2D;
+using SlimDX;
+using SlimDX.Direct3D11;
+using SlimDX.DirectWrite;
+using SlimDX.DXGI;
+using Brush = SlimDX.Direct2D.Brush;
+
+#endregion
+
+namespace CGTest
+{
+    public partial class Form1 : D2DSupportedRenderForm
+    {
+        public static ColorTexture ColTexture;
+<<<<<<< HEAD
+        private Brush brush;
+=======
+        // private Brush brush;
+      
+>>>>>>> Shoepon_NewRenderContext
+
+        private D2DSpriteTextformat format;
+
+        private IDynamicTexture tex2;
+        private TextureTargetContext textureTargetContext;
+<<<<<<< HEAD
+=======
+        private ShaderResourceView resourceView;
+>>>>>>> Shoepon_NewRenderContext
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            KeyPreview = true;
+            KinectDeviceManager dev = null;
+            //あとでコンストラクタのオーバーロードとして適切な初期値を使うようにしておきます
+<<<<<<< HEAD
+            textureTargetContext=new TextureTargetContext(RenderContext,new Viewport(0,0,800,800,0,1),new Texture2DDescription()
+            {
+                ArraySize = 1,
+                BindFlags = BindFlags.DepthStencil,
+                Format = Format.D32_Float,
+                Width = 800,
+                Height = 800,
+                MipLevels = 1,
+                SampleDescription = new SampleDescription(1,0)
+            },new Texture2DDescription()
+            {
+                ArraySize = 1,
+                BindFlags = BindFlags.RenderTarget|BindFlags.ShaderResource,
+                Format = Format.R32G32B32A32_Float,
+                Width = 800,
+                Height = 800,
+                MipLevels = 1,
+                SampleDescription = new SampleDescription(1,0)
+            }  );
+=======
+            textureTargetContext=new TextureTargetContext(RenderContext, new Size(800, 800), new SampleDescription(1, 0));
+>>>>>>> Shoepon_NewRenderContext
+            BasicGrid grid=new BasicGrid();
+            grid.Load(RenderContext);
+
+            //更新する必要のあるワールドスペースは、UpdateReqireWorldsに追加しなけれbなりません。
+            textureTargetContext.WorldSpace.AddResource(grid);
+            RenderContext.UpdateReqireWorlds.Add(textureTargetContext.WorldSpace);
+<<<<<<< HEAD
+            PlaneBoard bill = new PlaneBoard(RenderContext, textureTargetContext.ResourceView, new Vector2(800, 800));
+=======
+            resourceView = new ShaderResourceView(RenderContext.DeviceManager.Device, textureTargetContext.RenderTarget);
+            PlaneBoard bill = new PlaneBoard(RenderContext, resourceView, new Vector2(800, 800));
+>>>>>>> Shoepon_NewRenderContext
+            WorldSpace.AddResource(bill);
+            bill.Transformer.Position = new Vector3(0, 0, 20);
+            #region Kinectテストコード
+
+#if KINECT
+            OpenNIManager.Initialize();
+            dev = OpenNIManager.getDevice();
+
+            ColTexture = new ColorTexture(RenderContext, dev);
+            tex2 = new DepthTexture(RenderContext, 1000, dev);
+#endif
+
+            #endregion
+
+            //format = SpriteBatch.CreateTextformat("Meiriyo", 30, FontWeight.ExtraBold);
+
+
+            //brush = SpriteBatch.CreateRadialGradientBrush(g,
+            //    new RadialGradientBrushProperties() {CenterPoint = new PointF(100,100),GradientOriginOffset = new PointF(0,0),HorizontalRadius = 100f,VerticalRadius = 200f}).Brush;
+            //brush = SpriteBatch.CreateSolidColorBrush(Color.Aquamarine);
+            ScreenContext.CameraMotionProvider = new BasicCameraControllerMotionProvider(this, this);
+            BasicGrid gird = new BasicGrid();
+            gird.Visiblity = true;
+            gird.Load(RenderContext);
+
+            ScreenContext.WorldSpace.AddResource(gird);
+            //textureの世界には、childウィンドウに追加からできるようにしてあります。
+            ControlForm controlForm = new ControlForm(RenderContext, ScreenContext,textureTargetContext, dev);
+            controlForm.Show();
+            
+
+            #region Kinectテストコード
+#if KINECT
+            PlaneBoard bill = new PlaneBoard(RenderContext, ColTexture.TextureResourceView);
+            bill.Transformer.Position = new Vector3(0, 0, 50);
+            //bill.Transformer.Rotation *= Quaternion.RotationAxis(new Vector3(0,1,0),(float) (Math.PI));
+            form.WorldSpace.AddResource(bill);
+            form.WorldSpace.AddDynamicTexture(ColTexture);
+#endif
+
+            #endregion
+        }
+
+        public override void OnUpdated()
+        {
+            base.OnUpdated();
+        }
+
+        /// <summary>
+        ///     ここでスプライト描画
+        /// </summary>
+        protected override void RenderSprite()
+        {
+            //SpriteBatch.DWRenderTarget.FillRectangle(brush,SpriteBatch.FillRectangle);
+            //SpriteBatch.DWRenderTarget.DrawText(
+            //    string.Format("FPS:{0}\n\nBrush Test!!", FpsCounter.FPS.ToString("####.#")), format,
+            //    SpriteBatch.FillRectangle, brush);
+        }
+
+        protected override void OnPresented()
+        {
+            base.OnPresented();
+            textureTargetContext.Render();
+            //if(form.Visible)form.Render();
+        }
+    }
+}

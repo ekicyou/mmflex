@@ -1,0 +1,11 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:WPF="clr-namespace:MMF.WPF;assembly=MikuMikuFlex" x:Class="WPFTest.MainWindow"
+        Title="MainWindow" Height="350" Width="525" AllowsTransparency="true" WindowStyle="None" Background="Transparent" WindowState="Maximized">
+    <Grid>
+
+        <WPF:WPFRenderControl/>
+
+    </Grid>
+</Window>
