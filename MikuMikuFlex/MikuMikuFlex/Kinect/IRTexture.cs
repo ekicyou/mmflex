@@ -34,7 +34,7 @@ namespace MMF.Kinect
                 Usage =ResourceUsage.Dynamic
             };
             TextureResource=new Texture2D(context.DeviceManager.Device,tex2DDesc);
-            videoStream = device.KinnectDevice.CreateVideoStream(Device.SensorType.IR);
+            videoStream = device.KinnectDevice.CreateVideoStream(Device.SensorType.Ir);
             videoStream.Start();
             TextureResourceView = new ShaderResourceView(context.DeviceManager.Device, TextureResource);
             NeedUpdate = true;
@@ -47,7 +47,7 @@ namespace MMF.Kinect
             int width = 640;
             int height = 480;
             DataBox mapSubresource = context.DeviceManager.Context.MapSubresource(TextureResource,0, MapMode.WriteDiscard, MapFlags.None);
-            VideoFrameRef vidRef = videoStream.readFrame();
+            VideoFrameRef vidRef = videoStream.ReadFrame();
             byte[] bits=new byte[width*height];
             List<byte> drawed=new List<byte>();
             Marshal.Copy(vidRef.Data,bits,0,width*height);

@@ -155,9 +155,9 @@ namespace MMF.MME.VariableSubscriber.MaterialSubscriber
             info.isGroundShadowEnable = true;
             info.SphereMode=SphereMode.Disable;
             info.IsToonUsed = false;
-            if (material.GetTextures(TextureType.Diffuse) != null)
+            if (material.GetMaterialTextures(TextureType.Diffuse) != null)
             {
-                Stream stream = loader.getSubresourceByName(material.GetTextures(TextureType.Diffuse)[0].FilePath);
+                Stream stream = loader.getSubresourceByName(material.GetMaterialTextures(TextureType.Diffuse)[0].FilePath);
                 if(stream!=null)
                 using (
                     Texture2D texture = Texture2D.FromStream(context.DeviceManager.Device, stream, (int) stream.Length))

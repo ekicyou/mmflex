@@ -30,7 +30,7 @@ namespace MMF.Model.Assimp
             this.FileName = Path.GetFileName(fileName);
             this.context = context;
             loader=new BasicSubresourceLoader(Path.GetDirectoryName(fileName));
-            AssimpImporter importer=new AssimpImporter();
+            var importer = new AssimpContext();
             modelScene=importer.ImportFile(fileName,PostProcessSteps.Triangulate|PostProcessSteps.GenerateSmoothNormals);
             Visibility = true;
             Initialize();
@@ -56,7 +56,7 @@ namespace MMF.Model.Assimp
         private void Initialize()
         {
             Transformer=new BasicTransformer();
-            for (int i = 0; i < modelScene.Meshes.Length; i++)
+            for (int i = 0; i < modelScene.Meshes.Count; i++)
             {
                 subsets.Add(new AssimpSubset(context,loader,this, modelScene,i));
             }

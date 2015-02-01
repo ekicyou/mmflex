@@ -44,9 +44,9 @@ namespace MMF.Kinect
             OpenNI.Initialize();
             NiTE.Initialize();
             ConnectedDevices=OpenNI.EnumerateDevices();
-            OpenNI.onDeviceConnected += OpenNI_onDeviceConnected;
-            OpenNI.onDeviceDisconnected+=OpenNI_onDeviceConnected;
-            OpenNI.onDeviceStateChanged += OpenNI_onDeviceStateChanged;
+            OpenNI.OnDeviceConnected += OpenNI_onDeviceConnected;
+            OpenNI.OnDeviceDisconnected+=OpenNI_onDeviceConnected;
+            OpenNI.OnDeviceStateChanged += OpenNI_onDeviceStateChanged;
             Instance=new OpenNIManager();
         }
 

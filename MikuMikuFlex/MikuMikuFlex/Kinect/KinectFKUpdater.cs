@@ -24,20 +24,20 @@ namespace MMF.Kinect
 
         static KinectFKUpdater()
         {
-          ParentPairDictionary.Add(SkeletonJoint.JointType.HEAD,SkeletonJoint.JointType.NECK);
-          ParentPairDictionary.Add(SkeletonJoint.JointType.LEFT_SHOULDER, SkeletonJoint.JointType.NECK);
-          ParentPairDictionary.Add(SkeletonJoint.JointType.RIGHT_SHOULDER, SkeletonJoint.JointType.NECK);
-          ParentPairDictionary.Add(SkeletonJoint.JointType.LEFT_ELBOW,SkeletonJoint.JointType.LEFT_SHOULDER);
-          ParentPairDictionary.Add(SkeletonJoint.JointType.LEFT_HAND,SkeletonJoint.JointType.LEFT_ELBOW);
-          ParentPairDictionary.Add(SkeletonJoint.JointType.RIGHT_ELBOW, SkeletonJoint.JointType.RIGHT_SHOULDER);
-           ParentPairDictionary.Add(SkeletonJoint.JointType.RIGHT_HAND, SkeletonJoint.JointType.RIGHT_ELBOW);
-          ParentPairDictionary.Add(SkeletonJoint.JointType.TORSO, SkeletonJoint.JointType.NECK);
-            ParentPairDictionary.Add(SkeletonJoint.JointType.RIGHT_HIP, SkeletonJoint.JointType.TORSO);
-            ParentPairDictionary.Add(SkeletonJoint.JointType.LEFT_HIP, SkeletonJoint.JointType.TORSO);
-            ParentPairDictionary.Add(SkeletonJoint.JointType.LEFT_KNEE,SkeletonJoint.JointType.LEFT_HIP);
-            ParentPairDictionary.Add(SkeletonJoint.JointType.RIGHT_KNEE, SkeletonJoint.JointType.RIGHT_HIP);
-            ParentPairDictionary.Add(SkeletonJoint.JointType.RIGHT_FOOT, SkeletonJoint.JointType.RIGHT_KNEE);
-            ParentPairDictionary.Add(SkeletonJoint.JointType.LEFT_FOOT, SkeletonJoint.JointType.LEFT_KNEE);
+          ParentPairDictionary.Add(SkeletonJoint.JointType.Head,SkeletonJoint.JointType.Neck);
+          ParentPairDictionary.Add(SkeletonJoint.JointType.LeftShoulder, SkeletonJoint.JointType.Neck);
+          ParentPairDictionary.Add(SkeletonJoint.JointType.RightShoulder, SkeletonJoint.JointType.Neck);
+          ParentPairDictionary.Add(SkeletonJoint.JointType.LeftElbow,SkeletonJoint.JointType.LeftShoulder);
+          ParentPairDictionary.Add(SkeletonJoint.JointType.LeftHand,SkeletonJoint.JointType.LeftElbow);
+          ParentPairDictionary.Add(SkeletonJoint.JointType.RightElbow, SkeletonJoint.JointType.RightShoulder);
+           ParentPairDictionary.Add(SkeletonJoint.JointType.RightHand, SkeletonJoint.JointType.RightElbow);
+          ParentPairDictionary.Add(SkeletonJoint.JointType.Torso, SkeletonJoint.JointType.Neck);
+            ParentPairDictionary.Add(SkeletonJoint.JointType.RightHip, SkeletonJoint.JointType.Torso);
+            ParentPairDictionary.Add(SkeletonJoint.JointType.LeftHip, SkeletonJoint.JointType.Torso);
+            ParentPairDictionary.Add(SkeletonJoint.JointType.LeftKnee,SkeletonJoint.JointType.LeftHip);
+            ParentPairDictionary.Add(SkeletonJoint.JointType.RightKnee, SkeletonJoint.JointType.RightHip);
+            ParentPairDictionary.Add(SkeletonJoint.JointType.RightFoot, SkeletonJoint.JointType.RightKnee);
+            ParentPairDictionary.Add(SkeletonJoint.JointType.LeftFoot, SkeletonJoint.JointType.LeftKnee);
         }
 
         public Dictionary<SkeletonJoint.JointType,string> BindDictionary { get; set; }
@@ -70,8 +70,8 @@ namespace MMF.Kinect
             this.device = device;
             this.bones = bones;
             BindDictionary = new Dictionary<SkeletonJoint.JointType, string>();
-            BindDictionary.Add(SkeletonJoint.JointType.RIGHT_SHOULDER,"右腕");
-            BindDictionary.Add(SkeletonJoint.JointType.RIGHT_KNEE,"右ひじ");
+            BindDictionary.Add(SkeletonJoint.JointType.RightShoulder,"右腕");
+            BindDictionary.Add(SkeletonJoint.JointType.RightKnee,"右ひじ");
 
         }
 
@@ -87,7 +87,7 @@ namespace MMF.Kinect
                     (from sk in usrFrameRef.Users where sk.UserId == CurrentTrackUserId select sk).ToArray();
                 if (usrs.Length != 1) return true;
                 Skeleton skeleton = usrs[0].Skeleton;
-                if (skeleton.State == Skeleton.SkeletonState.TRACKED)
+                if (skeleton.State == Skeleton.SkeletonState.Tracked)
                 {
                     trackTarget = skeleton;
                     if (TrackingUser != null) TrackingUser(this, usrs[0]);
@@ -106,21 +106,21 @@ namespace MMF.Kinect
                     PMXBone l_hip = getBone("左足");
                     PMXBone l_knee = getBone("左ひざ");
                     PMXBone l_foot = getBone("左足首");
-                    SkeletonJoint sj_head = skeleton.getJoint(SkeletonJoint.JointType.HEAD);
-                    SkeletonJoint sj_neck = skeleton.getJoint(SkeletonJoint.JointType.NECK);
-                    SkeletonJoint sj_rShoulder = skeleton.getJoint(SkeletonJoint.JointType.RIGHT_SHOULDER);
-                    SkeletonJoint sj_lShoulder = skeleton.getJoint(SkeletonJoint.JointType.LEFT_SHOULDER);
-                    SkeletonJoint sj_rElbow = skeleton.getJoint(SkeletonJoint.JointType.RIGHT_ELBOW);
-                    SkeletonJoint sj_lElbow = skeleton.getJoint(SkeletonJoint.JointType.LEFT_ELBOW);
-                    SkeletonJoint sj_r_hand = skeleton.getJoint(SkeletonJoint.JointType.RIGHT_HAND);
-                    SkeletonJoint sj_l_hand = skeleton.getJoint(SkeletonJoint.JointType.LEFT_HAND);
-                    SkeletonJoint sj_torso = skeleton.getJoint(SkeletonJoint.JointType.TORSO);
-                    SkeletonJoint sj_rHip = skeleton.getJoint(SkeletonJoint.JointType.RIGHT_HIP);
-                    SkeletonJoint sj_lHip = skeleton.getJoint(SkeletonJoint.JointType.LEFT_HIP);
-                    SkeletonJoint sj_rKnee = skeleton.getJoint(SkeletonJoint.JointType.RIGHT_KNEE);
-                    SkeletonJoint sj_lKnee = skeleton.getJoint(SkeletonJoint.JointType.LEFT_KNEE);
-                    SkeletonJoint sj_rFoot = skeleton.getJoint(SkeletonJoint.JointType.RIGHT_FOOT);
-                    SkeletonJoint sj_lFoot = skeleton.getJoint(SkeletonJoint.JointType.LEFT_FOOT);
+                    SkeletonJoint sj_head = skeleton.GetJoint(SkeletonJoint.JointType.Head);
+                    SkeletonJoint sj_neck = skeleton.GetJoint(SkeletonJoint.JointType.Neck);
+                    SkeletonJoint sj_rShoulder = skeleton.GetJoint(SkeletonJoint.JointType.RightShoulder);
+                    SkeletonJoint sj_lShoulder = skeleton.GetJoint(SkeletonJoint.JointType.LeftShoulder);
+                    SkeletonJoint sj_rElbow = skeleton.GetJoint(SkeletonJoint.JointType.RightElbow);
+                    SkeletonJoint sj_lElbow = skeleton.GetJoint(SkeletonJoint.JointType.LeftElbow);
+                    SkeletonJoint sj_r_hand = skeleton.GetJoint(SkeletonJoint.JointType.RightHand);
+                    SkeletonJoint sj_l_hand = skeleton.GetJoint(SkeletonJoint.JointType.LeftHand);
+                    SkeletonJoint sj_torso = skeleton.GetJoint(SkeletonJoint.JointType.Torso);
+                    SkeletonJoint sj_rHip = skeleton.GetJoint(SkeletonJoint.JointType.RightHip);
+                    SkeletonJoint sj_lHip = skeleton.GetJoint(SkeletonJoint.JointType.LeftHip);
+                    SkeletonJoint sj_rKnee = skeleton.GetJoint(SkeletonJoint.JointType.RightKnee);
+                    SkeletonJoint sj_lKnee = skeleton.GetJoint(SkeletonJoint.JointType.LeftKnee);
+                    SkeletonJoint sj_rFoot = skeleton.GetJoint(SkeletonJoint.JointType.RightFoot);
+                    SkeletonJoint sj_lFoot = skeleton.GetJoint(SkeletonJoint.JointType.LeftFoot);
                     //腰のひねり
                     Vector3 shoulder_l2r =
                         Vector3.Normalize(

@@ -53,7 +53,7 @@ namespace MMF.Kinect
             };
             TextureResource=new Texture2D(context.DeviceManager.Device,tex2DDesc);
             TextureResourceView=new ShaderResourceView(context.DeviceManager.Device,TextureResource);
-            videoStream = kinectDevice.KinnectDevice.CreateVideoStream(Device.SensorType.COLOR);
+            videoStream = kinectDevice.KinnectDevice.CreateVideoStream(Device.SensorType.Color);
             videoStream.Start();
             NeedUpdate = true;
         }
@@ -65,20 +65,20 @@ namespace MMF.Kinect
 
         private List<Tuple<SkeletonJoint.JointType,SkeletonJoint.JointType>> drawJoints=new List<Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>>()
         {
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.HEAD, SkeletonJoint.JointType.NECK),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.NECK, SkeletonJoint.JointType.LEFT_SHOULDER),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.NECK, SkeletonJoint.JointType.RIGHT_SHOULDER),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.LEFT_SHOULDER, SkeletonJoint.JointType.LEFT_ELBOW),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.LEFT_ELBOW, SkeletonJoint.JointType.LEFT_HAND),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.RIGHT_SHOULDER,SkeletonJoint.JointType.RIGHT_ELBOW),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.RIGHT_ELBOW,SkeletonJoint.JointType.RIGHT_HAND),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.NECK,SkeletonJoint.JointType.TORSO),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.TORSO, SkeletonJoint.JointType.RIGHT_HIP),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.TORSO, SkeletonJoint.JointType.LEFT_HIP),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.LEFT_HIP, SkeletonJoint.JointType.LEFT_KNEE),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.RIGHT_HIP,SkeletonJoint.JointType.RIGHT_KNEE),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.LEFT_KNEE, SkeletonJoint.JointType.LEFT_FOOT),
-            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.RIGHT_KNEE, SkeletonJoint.JointType.RIGHT_FOOT)
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.Head, SkeletonJoint.JointType.Neck),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.Neck, SkeletonJoint.JointType.LeftShoulder),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.Neck, SkeletonJoint.JointType.RightShoulder),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.LeftShoulder, SkeletonJoint.JointType.LeftElbow),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.LeftElbow, SkeletonJoint.JointType.LeftHand),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.RightShoulder,SkeletonJoint.JointType.RightElbow),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.RightElbow,SkeletonJoint.JointType.RightHand),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.Neck,SkeletonJoint.JointType.Torso),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.Torso, SkeletonJoint.JointType.RightHip),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.Torso, SkeletonJoint.JointType.LeftHip),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.LeftHip, SkeletonJoint.JointType.LeftKnee),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.RightHip,SkeletonJoint.JointType.RightKnee),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.LeftKnee, SkeletonJoint.JointType.LeftFoot),
+            new Tuple<SkeletonJoint.JointType, SkeletonJoint.JointType>(SkeletonJoint.JointType.RightKnee, SkeletonJoint.JointType.RightFoot)
         }; 
 
         public void UpdateTexture()
@@ -86,7 +86,7 @@ namespace MMF.Kinect
             int width = 640;
             int height = 480;
             DataBox mapSubresource = context.DeviceManager.Context.MapSubresource(TextureResource,0, MapMode.WriteDiscard, MapFlags.None);
-            VideoFrameRef vidRef = videoStream.readFrame();
+            VideoFrameRef vidRef = videoStream.ReadFrame();
             UserTrackerFrameRef usrRef = KinectDevice.CurrentUserTrackerFrameRef;
             IntPtr intPtr = usrRef.UserMap.Pixels;
             byte[] bits=new byte[width*height*3];
@@ -96,16 +96,16 @@ namespace MMF.Kinect
             Marshal.Copy(intPtr,ubits,0,width*height*2);
             mapSubresource.Data.Seek(0, SeekOrigin.Begin);
 
-            UserData cursorUser = KinectDevice.CurrentUserTrackerFrameRef.getUserById(KinectDevice.UserCursor);
+            UserData cursorUser = KinectDevice.CurrentUserTrackerFrameRef.GetUserById(KinectDevice.UserCursor);
             var targetSkel = cursorUser.Skeleton;
 
             for (int i = 0; i < width*height; i++)
             {
                 short uid = BitConverter.ToInt16(ubits, i*2);
                
-                if (cursorUser.isValid&&uid==KinectDevice.UserCursor)
+                if (cursorUser.IsValid&&uid==KinectDevice.UserCursor)
                 {
-                    if (targetSkel.State == Skeleton.SkeletonState.CALIBRATING)
+                    if (targetSkel.State == Skeleton.SkeletonState.Calibrating)
                     {
                         drawed.Add(255);
                         drawed.Add(255);
@@ -113,7 +113,7 @@ namespace MMF.Kinect
                         drawed.Add(255);
                         continue;
                     }
-                    else if (targetSkel.State == Skeleton.SkeletonState.TRACKED)
+                    else if (targetSkel.State == Skeleton.SkeletonState.Tracked)
                     {
                         drawed.Add(0);
                         drawed.Add(255);
@@ -121,7 +121,7 @@ namespace MMF.Kinect
                         drawed.Add(255);
                         continue;
                     }
-                    else if (targetSkel.State == Skeleton.SkeletonState.NONE)
+                    else if (targetSkel.State == Skeleton.SkeletonState.None)
                     {
                         drawed.Add(0);
                         drawed.Add(255);
@@ -140,8 +140,8 @@ namespace MMF.Kinect
                 UserData TargetUser = trackedUser.Value;
                 foreach (var drawJoint in drawJoints)
                 {
-                    SkeletonJoint j1 = TargetUser.Skeleton.getJoint(drawJoint.Item1);
-                    SkeletonJoint j2 = TargetUser.Skeleton.getJoint(drawJoint.Item2);
+                    SkeletonJoint j1 = TargetUser.Skeleton.GetJoint(drawJoint.Item1);
+                    SkeletonJoint j2 = TargetUser.Skeleton.GetJoint(drawJoint.Item2);
                     PointF p1 =
                         KinectDevice.NiteUserTracker.ConvertJointCoordinatesToDepth(j1.Position);
                     PointF p2 =

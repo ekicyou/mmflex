@@ -22,7 +22,7 @@ namespace MMF.Kinect
             {
                 if (hasNewValue)
                 {
-                    _currentUserTrackerFrameRef = _niteUserTracker.readFrame();
+                    _currentUserTrackerFrameRef = _niteUserTracker.ReadFrame();
                     UpdateUserData();
                     hasNewValue = false;
                 }
@@ -34,7 +34,7 @@ namespace MMF.Kinect
         {
             //トラッキング済みのユーザーの配列を作成する
             TrackedUsers =( from user in _currentUserTrackerFrameRef.Users
-                where user.Skeleton.State == Skeleton.SkeletonState.TRACKED
+                where user.Skeleton.State == Skeleton.SkeletonState.Tracked
                 select user).ToDictionary((user)=>user.UserId,(user)=>user);
         }
 
@@ -63,7 +63,7 @@ namespace MMF.Kinect
             set
             {
                 _userCursor = value;
-                if (!_currentUserTrackerFrameRef.getUserById(value).isValid)
+                if (!_currentUserTrackerFrameRef.GetUserById(value).IsValid)
                     _userCursor = 0;
             }
         }
@@ -82,7 +82,7 @@ namespace MMF.Kinect
         {
             KinnectDevice = device;
             _niteUserTracker = UserTracker.Create(KinnectDevice);
-            _niteUserTracker.onNewData += _niteUserTracker_onNewData;
+            _niteUserTracker.OnNewData += _niteUserTracker_onNewData;
         }
 
         public void Dispose()

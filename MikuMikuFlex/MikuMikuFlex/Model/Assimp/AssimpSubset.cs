@@ -37,9 +37,9 @@ namespace MMF.Model.Assimp
                     BasicInputLayout input = new BasicInputLayout();
                     input.Position = mesh.Vertices[vIndex].ToSlimDXVec4().InvX();
                     input.Normal = mesh.Normals[vIndex].ToSlimDX();
-                    if(mesh.GetTextureCoords(0)!=null)
+                    if (mesh.TextureCoordinateChannelCount > 0 && mesh.TextureCoordinateChannels[0] != null)
                     {
-                        Vector3 vec=mesh.GetTextureCoords(0)[vIndex].ToSlimDX();
+                        Vector3 vec = mesh.TextureCoordinateChannels[0][vIndex].ToSlimDX();
                         input.UV = new Vector2(vec.X, 1-vec.Y);
                     }
                     input.BoneWeight1 = 1f;
